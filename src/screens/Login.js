@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import { StatusBar, ImageBackground } from "react-native";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert } from "react-native";
 import axios from 'axios';
@@ -6,21 +6,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function App() {
   const navigation = useNavigation(); // Get the navigation object using useNavigation hook
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem('token');
-      if (token) {
-        navigation.navigate('Dashboard');
-      }
-    };
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   const checkToken = async () => {
+  //     const token = await AsyncStorage.getItem('token');
+  //     if (token) {
+  //       navigation.navigate('Dashboard');
+  //     }
+  //   };
+  //   checkToken();
+  // }, []);
 
   const handleLogin = async () => {
     try {
@@ -53,51 +52,60 @@ export default function App() {
   };
   const handleRegister = async () => {
     try {
-   console.log("register call");
-      navigation.navigate('Registration');
+      navigation.navigate('Register');
     } catch (error) {
       console.error('Login failed:', error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/images/cflogo.webp')} />
-      <StatusBar style="auto" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-        />
+    <ImageBackground source={require('../../assets/images/bg.png')} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <Image style={styles.logo} source={require('../../assets/images/logo1.png')} />
+        <StatusBar style="auto" />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => setEmail(email)}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+          />
+        </View>
+        <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
+          <Text style={styles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
+       
+        <TouchableOpacity onPress={handleRegister} style={styles.registerBtn}>
+          <Text style={styles.loginText}>REGISTER</Text>
+        </TouchableOpacity>
+        <Text style={styles.forgot_button}>New User?</Text>
+        
       </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
-      <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-     
-      <TouchableOpacity onPress={handleRegister} style={styles.registerBtn}>
-        <Text style={styles.loginText}>REGISTER</Text>
-      </TouchableOpacity>
-      <Text style={styles.forgot_button}>New User?</Text>
-      
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  logo:{
+  height:140,
+  width:280,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

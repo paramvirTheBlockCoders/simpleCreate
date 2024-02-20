@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
 import axios from 'axios';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -54,6 +54,7 @@ const Registration = ({ navigation }) => {
   };
 
   return (
+    <ImageBackground source={require('../../assets/images/bg.png')} style={styles.backgroundImage}>
     <View style={styles.container}>
       <Text style={styles.title}>Register User</Text>
       <View style={styles.inputView}>
@@ -108,6 +109,7 @@ const Registration = ({ navigation }) => {
         <Text style={styles.loginText}>REGISTER</Text>
       </TouchableOpacity>
     </View>
+    </ImageBackground>
   );
 };
 
